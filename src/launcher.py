@@ -1,6 +1,9 @@
 
 
-import sys, pygame
+import os
+import sys
+import pygame
+
 
 
 """
@@ -12,19 +15,29 @@ This class also contains some functions that affect the game rendering process, 
 """
 In order for a game to be read correctly by the launcher, the game needs to be on his own folder.
 The folder needs to contain a file called "main". The launcher is going to take the "main" file as the main/important 
-file like his namesake.
+file like his namesake. The game needs to be inside a class called 'App'. You need to bundle all the application code
+inside a function called "container".
+
+I know I know, a lot of requirements.
 """
 
 
 class Launcher:
     def __init__(self):
-        self.screen = pygame.display.set_mode([200, 200])
+        self.screen = pygame.display.set_mode([500, 500])
         self.current_app = 'menu'
+        self.game = self.read_app().App(self.screen)
 
     def set_caption(self):
-        pygame.display.set_caption(self.current_app)
+        pygame.display.set_caption(self.current_app.capitalize())
+
+    # This function imports and return the file as an object that can be called
+    def read_app(self):
+        module = __import__('games.%s.main' % self.current_app, globals(), locals(), ['App'], -1)
+        return module
 
     def start(self):
+        self.read_app()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -32,7 +45,8 @@ class Launcher:
                     sys.exit()
 
             self.set_caption()
-            self.screen.fill([20,20,20])
+            self.game.container()
+
             pygame.display.update()
 
 
