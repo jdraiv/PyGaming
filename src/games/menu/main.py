@@ -1,31 +1,25 @@
 
-import re
+import json
 import os
-from glob import glob
 
 
 # This class helps the user select the game the user wants to play
 class App:
     def __init__(self, screen):
         self.screen = screen
-        self.games_list = self.get_games()
+        self.games = self.get_games()
 
     def show_menu(self):
         self.screen.fill([150, 150, 150])
 
     def get_games(self):
-        # Return the name of app
-        def get_f_name(s, exp):
-            return filter(None, re.split("[%s]+" % exp, s))[-1]
+        location = "%s/games/games.json" % os.getcwd()
+        games = json.load(open(location, 'r'))
 
-        dir = "%s/games/" % os.getcwd()
-        data = glob("%s*/" % dir)
-
-        result = [get_f_name(folder, "/") for folder in data]
-        return result
+        return [dic['name'] for dic in games['games']]
 
     def container(self):
-        print(self.games_list)
+        print(self.games)
         self.show_menu()
 
 

@@ -1,0 +1,9 @@
+
+{
+  "games": [
+    {
+      "name": "Snake",
+      "description": "Short text."
+    }
+  ]
+}

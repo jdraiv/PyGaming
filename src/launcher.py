@@ -33,7 +33,7 @@ class Launcher:
 
     # This function imports and return the file as an object that can be called
     def read_app(self):
-        module = __import__('games.%s.main' % self.current_app, globals(), locals(), ['App'], -1)
+        module = __import__('games.%s.main' % self.current_app, globals(), locals(), ['App'], 0)
         return module
 
     def start(self):
