@@ -37,7 +37,9 @@ class Launcher:
         return module
 
     def start(self):
-        self.read_app()
+        # Initialize fonts
+        pygame.font.init()
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

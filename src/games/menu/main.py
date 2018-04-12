@@ -2,6 +2,9 @@
 import json
 import os
 
+# Font Module
+from modules.fonts.Fontom import Fontom
+
 
 # This class helps the user select the game the user wants to play
 class App:
@@ -11,6 +14,7 @@ class App:
 
     def show_menu(self):
         self.screen.fill([150, 150, 150])
+        Fontom(self.screen).horizontal_center('Testing')
 
     def get_games(self):
         location = "%s/games/games.json" % os.getcwd()
@@ -19,8 +23,4 @@ class App:
         return [dic['name'] for dic in games['games']]
 
     def container(self):
-        print(self.games)
         self.show_menu()
-
-
-test = "hai"
