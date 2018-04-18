@@ -17,16 +17,14 @@ In order for a game to be read correctly by the launcher, the game needs to be o
 The folder needs to contain a file called "main". The launcher is going to take the "main" file as the main/important 
 file like his namesake. The game needs to be inside a class called 'App'. You need to bundle all the application code
 inside a function called "container".
-
-I know I know, a lot of requirements.
 """
 
 
 class Launcher:
     def __init__(self):
-        self.screen = pygame.display.set_mode([500, 500])
+        self.window = pygame.display.set_mode([500, 500])
         self.current_app = 'menu'
-        self.game = self.read_app().App(self.screen)
+        self.game = self.read_app().App(self.window)
 
     def set_caption(self):
         pygame.display.set_caption(self.current_app.capitalize())
@@ -41,10 +39,6 @@ class Launcher:
         pygame.font.init()
 
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    print("Goodbye")
-                    sys.exit()
 
             self.set_caption()
             self.game.container()

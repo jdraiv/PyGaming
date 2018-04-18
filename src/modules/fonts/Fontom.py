@@ -6,18 +6,29 @@ import pygame
 
 
 class Fontom:
-    def __init__(self, screen):
-        self.screen = screen
+    def __init__(self, window, font_family='Lorem Ipsum'):
+        self.window = window
+        self.font_family = font_family
 
-    def horizontal_center(self, text):
-        c_font = pygame.font.SysFont('Comic Sans MS', 30)
+    def draw_text(self, text, color=[255, 255, 255], pos_x=0, pos_y=0, font_size=30, hor_center=False, ver_center=False):
+        # This function checks if an object needs to be centered, if not, returns the normal position.
+        def should_center(pos, w_size, bool):
+            if bool:
+                return w_size / 2
+            else:
+                return pos
 
-        text_object = c_font.render(text, False, (0, 0, 0))
+        font = pygame.font.SysFont(self.font_family, font_size, True)
+        text_obj = font.render(text, True, color)
+        window_size = pygame.display.get_surface().get_size()
 
-        self.screen.blit(text_object, (100, 100))
+        # Set text element.
+        text_rect = text_obj.get_rect(center=(
+            should_center(pos_x, window_size[0], hor_center),
+            should_center(pos_y, window_size[1], ver_center)))
 
-    def vertical_center(self, h):
-        pass
+        # Draw text
+        self.window.blit(text_obj, text_rect)
 
 
 
