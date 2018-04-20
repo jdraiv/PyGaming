@@ -10,6 +10,8 @@ from modules.fonts.Fontom import Fontom
 # Events modules
 from modules.events.Eventoral import Eventoral
 
+import setup_vars
+
 
 # This class helps the user select the game the user wants to play
 class App:
@@ -17,7 +19,6 @@ class App:
         self.screen = screen
         self.games = self.get_games()
         self.fontom = Fontom(self.screen)
-        self.events = Eventoral()
         self.current_game_num = 0
 
     def show_menu(self):
@@ -29,15 +30,27 @@ class App:
 
         self.fontom.draw_text("< %s >" % self.games[self.current_game_num], font_size=30, pos_y=400, hor_center=True)
 
-    def controller(self):
+    def events(self):
         for event in pygame.event.get():
-            self.events.exit(event)
+            if event.type == pygame.KEYDOWN:
+                if event.key == 97 or event.key == 276:
+                    self.current_game_num -= 1
+                elif event.key == 100 or event.key == 275:
+                    self.current_game_num += 1
+                elif event.key == 32:
+                    setup_vars.current_game = self.games[self.current_game_num]
+                    print("Play")
 
-    def change_game(self):
-        if self.current_game_num <= len(self.games):
+                # Update current_game index value
+                self.validate_game_num()
+
+            Eventoral().exit(event)
+
+    def validate_game_num(self):
+        if self.current_game_num == len(self.games):
             self.current_game_num = 0
-        else:
-            self.current_game_num += 1
+        elif self.current_game_num < 0:
+            self.current_game_num = len(self.games) - 1
 
     def get_games(self):
         location = "%s/games/games.json" % os.getcwd()
@@ -47,4 +60,4 @@ class App:
 
     def container(self):
         self.show_menu()
-        self.controller()
+        self.events()

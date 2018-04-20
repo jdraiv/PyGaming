@@ -11,5 +11,3 @@ class Eventoral:
         if event.type == pygame.QUIT:
             print("Goodbye")
             sys.exit()
-
-    
