@@ -1,8 +1,6 @@
 
-
-import os
-import sys
 import pygame
+import time
 
 
 
@@ -42,9 +40,16 @@ class Launcher:
 
         while True:
             self.set_caption()
+
+            # Game execution time.
+            clock = pygame.time.Clock()
+            clock.tick(setup_vars.time)
+
+            # Execute game
             self.game.container()
 
-            # Check if the application was changed. If the application was changed, reload the new game module.
+            # Check if the application was changed. If the application was changed, reload the new game module
+            # and clean the screen.
             if self.current_app != setup_vars.current_game:
                 self.current_app = setup_vars.current_game
                 self.game = self.read_app().App(self.window)
