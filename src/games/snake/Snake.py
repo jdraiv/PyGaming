@@ -33,6 +33,24 @@ class Snake:
             self.snake_body.append([0, 0])
             return True
 
+    def tail_collision(self):
+        if self.snake_body[0] in self.snake_body[1:]:
+            print("Collision")
+
+    def border_collision(self):
+        w, h = pygame.display.get_surface().get_size()
+
+        head_pos = self.snake_body[0]
+
+        if head_pos[0] > w:
+            self.snake_body[0][0] = 0
+        elif head_pos[0] < 0:
+            self.snake_body[0][0] = w
+        elif head_pos[1] > h:
+            self.snake_body[0][1] = 0
+        elif head_pos[1] < 0:
+            self.snake_body[0][1] = h
+
     def snake_movement(self):
         # Update head position.
         def head_update(direction, positions_list, seg_size):
@@ -66,3 +84,6 @@ class Snake:
 
         # Set the new head position.
         self.snake_body[0] = head_update(self.current_direction, self.snake_body[0], self.segment_size)
+
+        self.tail_collision()
+        self.border_collision()
