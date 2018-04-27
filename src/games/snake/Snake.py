@@ -18,15 +18,27 @@ class Snake:
             pygame.draw.rect(self.window, [250, 250, 250], [sub_list[0], sub_list[1], self.segment_size, self.segment_size])
 
     def snake_controller(self, event):
+        def valid_direction(current_direction, new_direction):
+            result = False
+            x, y = ['left', 'right'], ['up', 'down']
+
+            if new_direction == 'left' or new_direction == 'right':
+                if current_direction not in x:
+                    result = True
+            else:
+                if current_direction not in y:
+                    result = True
+
+            return result
+
+        values = {'a': 'left', 'd': 'right', 'w': 'up', 's': 'down'}
+
         if event.type == pygame.KEYDOWN:
-            if event.key == 97:
-                self.current_direction = 'left'
-            elif event.key == 100:
-                self.current_direction = 'right'
-            elif event.key == 119:
-                self.current_direction = 'up'
-            elif event.key == 115:
-                self.current_direction = 'down'
+            current_value = chr(event.key)
+
+            if current_value in values and current_value != self.current_direction:
+                if valid_direction(self.current_direction, values[current_value]):
+                    self.current_direction = values[current_value]
 
     def apple_collision(self):
         if self.snake_body[0][0] == self.apple_pos[0] and self.snake_body[0][1] == self.apple_pos[1]:
