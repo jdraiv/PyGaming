@@ -2,10 +2,10 @@
 import pygame
 from modules.events.Eventoral import Eventoral
 
-from .Snake import Snake
-from .Apple import Apple
-from .UI import UI
-import setup_vars
+from .modules.Snake import Snake
+from .modules.Apple import Apple
+from .modules.UI import UI
+from setup_vars import setup_vars
 
 """
 The body of the snake is implemented as a list. The segments are implemented as a sub_list inside the body list
@@ -24,20 +24,24 @@ class App:
 
     def events(self):
         for event in pygame.event.get():
+            # Listen to events in the snake module
             self.snake_class.snake_controller(event)
 
             # Exit window event
             self.events_class.exit(event)
+            # Pause event
             self.events_class.pause(event, 'p')
+            # Restart event
+            self.events_class.restart(event, 'r')
 
     def set_vars(self):
-        setup_vars.time = 25
+        setup_vars['time'] = 25
 
     def container(self):
         self.set_vars()
         self.events()
 
-        if not setup_vars.pause:
+        if not setup_vars['pause']:
             self.snake_class.snake_movement()
             self.snake_class.draw_snake()
 
@@ -47,7 +51,14 @@ class App:
                 self.apple_class.set_position()
                 self.snake_class.apple_pos = self.apple_class.apple_pos
 
+            # Check snake collision
+            if self.snake_class.tail_collision():
+                setup_vars['pause'] = True
+                setup_vars['game_over'] = True
+
             self.apple_class.draw_apple()
+        elif setup_vars['game_over']:
+            self.ui_class.game_over()
         else:
             self.ui_class.pause_menu()
 

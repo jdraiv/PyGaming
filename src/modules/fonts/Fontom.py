@@ -5,7 +5,7 @@
 import pygame
 
 
-class Fontom:
+class Fontom(object):
     def __init__(self, window, font_family='Lorem Ipsum'):
         self.window = window
         self.font_family = font_family

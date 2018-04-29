@@ -1,6 +1,6 @@
 
 import pygame
-from .game_vars import vars
+from ..game_vars import vars
 
 
 class Snake:
@@ -48,6 +48,7 @@ class Snake:
     def tail_collision(self):
         if self.snake_body[0] in self.snake_body[1:]:
             print("Collision")
+            return True
 
     def border_collision(self):
         w, h = pygame.display.get_surface().get_size()
@@ -97,5 +98,4 @@ class Snake:
         # Set the new head position.
         self.snake_body[0] = head_update(self.current_direction, self.snake_body[0], self.segment_size)
 
-        self.tail_collision()
         self.border_collision()

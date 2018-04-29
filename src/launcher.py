@@ -1,7 +1,7 @@
 
 import pygame
 import time
-
+from setup_vars import setup_vars
 
 
 """
@@ -18,13 +18,11 @@ file like his namesake. The game needs to be inside a class called "App".
 You need to bundle all the application code inside a function called "container".
 """
 
-import setup_vars
-
 
 class Launcher:
     def __init__(self):
         self.window = pygame.display.set_mode([500, 500])
-        self.current_app = setup_vars.current_game
+        self.current_app = setup_vars['current_game']
         self.game = self.read_app().App(self.window)
 
     def set_caption(self):
@@ -43,24 +41,26 @@ class Launcher:
 
             # Game execution time.
             clock = pygame.time.Clock()
-            clock.tick(setup_vars.time)
+            clock.tick(setup_vars['time'])
 
-            # Execute game
-            self.game.container()
-
-            # Check if the application was changed. If the application was changed, reload the new game module
+            # Check if the application was changed or if the game needs to be restarted.
+            # If the application was changed or needs to be restarted, reload the new game module
             # and clean the screen.
-            if self.current_app != setup_vars.current_game:
-                self.current_app = setup_vars.current_game
+            if self.current_app != setup_vars['current_game'] or setup_vars['restart']:
+                self.current_app = setup_vars['current_game']
                 self.game = self.read_app().App(self.window)
 
                 # Clean screen
                 self.window.fill((0, 0, 0))
                 pygame.display.flip()
 
+                # Reset restart variable in case that the game needed to be restarted
+                setup_vars['restart'] = False
+
+            # Execute game
+            self.game.container()
+
             pygame.display.update()
-
-
 
 
 Launcher().start()

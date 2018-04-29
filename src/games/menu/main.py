@@ -2,15 +2,13 @@
 import json
 import os
 import pygame
-import sys
 
-
-# Font Module
+# Font module
 from modules.fonts.Fontom import Fontom
-# Events modules
+# Events module
 from modules.events.Eventoral import Eventoral
 
-import setup_vars
+from setup_vars import setup_vars
 
 
 # This class helps the user select the game the user wants to play
@@ -24,11 +22,26 @@ class App:
     def show_menu(self):
         self.screen.fill([55, 56, 68])
 
-        self.fontom.draw_text('PyEngine', font_size=80, pos_y=50, hor_center=True)
+        self.fontom.draw_text(
+            text='PyEngine',
+            font_size=80,
+            pos_y=50,
+            hor_center=True
+        )
 
-        self.fontom.draw_text('Select Game', font_size=50, pos_y=340, hor_center=True)
+        self.fontom.draw_text(
+            text='Select Game',
+            font_size=50,
+            pos_y=340,
+            hor_center=True
+        )
 
-        self.fontom.draw_text("< %s >" % self.games[self.current_game_num], font_size=30, pos_y=400, hor_center=True)
+        self.fontom.draw_text(
+            text="< %s >" % self.games[self.current_game_num],
+            font_size=30,
+            pos_y=400,
+            hor_center=True
+        )
 
     def events(self):
         for event in pygame.event.get():
@@ -38,7 +51,7 @@ class App:
                 elif event.key == 100 or event.key == 275:
                     self.current_game_num += 1
                 elif event.key == 32:
-                    setup_vars.current_game = self.games[self.current_game_num]
+                    setup_vars['current_game'] = self.games[self.current_game_num]
                     print("Play")
 
                 # Update current_game index value

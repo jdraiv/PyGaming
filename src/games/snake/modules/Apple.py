@@ -2,7 +2,7 @@
 
 import pygame
 import random
-from .game_vars import vars
+from ..game_vars import vars
 
 
 class Apple:
