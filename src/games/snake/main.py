@@ -6,6 +6,7 @@ from .modules.Snake import Snake
 from .modules.Apple import Apple
 from .modules.UI import UI
 from setup_vars import setup_vars
+from .game_vars import vars
 
 """
 The body of the snake is implemented as a list. The segments are implemented as a sub_list inside the body list
@@ -45,11 +46,16 @@ class App:
             self.snake_class.snake_movement()
             self.snake_class.draw_snake()
 
+            self.ui_class.draw_score()
+
             # Check if the apple is eaten
             if self.snake_class.apple_collision():
                 # Set new apple position
                 self.apple_class.set_position()
                 self.snake_class.apple_pos = self.apple_class.apple_pos
+
+                # Add point to score
+                vars['score'] += 1
 
             # Check snake collision
             if self.snake_class.tail_collision():

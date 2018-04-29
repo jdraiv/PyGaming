@@ -26,3 +26,11 @@ class UI:
             hor_center=True,
             ver_center=True
         )
+
+    def draw_score(self):
+        self.fontom.draw_text(
+            text=vars['score'],
+            font_size=30,
+            x_pos=30,
+            y_pos=30
+        )

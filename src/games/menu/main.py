@@ -25,21 +25,21 @@ class App:
         self.fontom.draw_text(
             text='PyEngine',
             font_size=80,
-            pos_y=50,
+            y_pos=50,
             hor_center=True
         )
 
         self.fontom.draw_text(
             text='Select Game',
             font_size=50,
-            pos_y=340,
+            y_pos=340,
             hor_center=True
         )
 
         self.fontom.draw_text(
             text="< %s >" % self.games[self.current_game_num],
             font_size=30,
-            pos_y=400,
+            y_pos=400,
             hor_center=True
         )
 
